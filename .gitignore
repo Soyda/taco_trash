@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#pycharm/ dataspell files
+.idea/
+
+#initial data dataset
+../data/original_dataset/..
