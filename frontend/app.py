@@ -27,6 +27,13 @@ def choice():
         ('Lille', "Villeneuve d'Ascq"))
 
     st.write('You selected:', option)
+    if option== 'Lille':
+        image_lille = Image.open('src/lille.jpg')
+        st.image(image_lille)
+
+    if option== "Villeneuve d'Ascq":
+        image_villeneuve = Image.open('src/villeneuve_d_ascq.png')
+        st.image(image_villeneuve)
     return option
     
 
