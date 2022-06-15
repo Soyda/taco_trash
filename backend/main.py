@@ -22,19 +22,15 @@ async def root():
 
 @app.post("/upload_file")
 async def read_root(file: UploadFile = File()):
-    # image = read_imagefile(await file.read())
-
+ 
     image = file.file._file
 
-    # TO SAVE FILE
-    # file_location = f"{file.filename}"
-    # with open(file_location, "wb+") as file_object:
-    #     file_object.write(file.file.read())
+    #classes and sorting rules
+    classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
+
+    recyclable_lille = ["plastic","glass","metal","paper","cardboard"]
 
     #PREPROCESSING AND PREDICTION
-    classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
-    recyclable_lille = ["plastic","glass","metal","paper"]
-
     img = tf.keras.preprocessing.image.load_img(image, target_size=(256, 256))
     img_array = tf.keras.preprocessing.image.img_to_array(img)
     img_array = tf.expand_dims(img_array, 0) 
@@ -48,8 +44,8 @@ async def read_root(file: UploadFile = File()):
 
 
     return {"info": f"file '{file.filename}'",
-            # "content": image,
-            "label":classes[np.argmax(predictions)] + f" {np.round(predictions[0][np.argmax(predictions)]*100, 2)}%",
+            "label":classes[np.argmax(predictions)],
+            "confidence": f"{np.round(predictions[0][np.argmax(predictions)]*100, 2)}%",
             "bin":bin}
 
 

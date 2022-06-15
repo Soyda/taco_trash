@@ -13,15 +13,23 @@ URL = "http://host.docker.internal:8000"
 
 classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
-recyclable_lille = ["plastic","glass","metal","paper"]
+recyclable_lille = ["plastic","glass","metal","paper","cardboard"]
 
-def load_model():
-    model = keras.models.load_model('modele_alpha_mich')
-    return model
+villeneuve_papier = ['papier','cardboard']
 
+villeneuve_plastique = ['plastic','glass','metal']
+
+villeneuve_organique = ['organic']
+
+def choice():
+    option = st.selectbox(
+        'Dans quelle ville résidez vous ?',
+        ('Lille', "Villeneuve d'Ascq"))
+
+    st.write('You selected:', option)
+    return option
     
 
-# fonction test
 def load_image(img):
     img = Image.open(img)
     return img
@@ -43,7 +51,7 @@ def get_image():
 
     return uploaded_file
 
-def predict(uploaded_file): #(model, image):
+def predict(uploaded_file, option):
     # load image
     file = {'file': (uploaded_file.name, open(uploaded_file.name, 'rb'))}
 
@@ -56,17 +64,39 @@ def predict(uploaded_file): #(model, image):
     #remove image
     os.remove(f"{uploaded_file.name}")
 
+    if option == 'Lille':
+        if response.json()["label"] in recyclable_lille:
+            st.write("recyclable", response.json()["label"])
+
+        else:
+            st.write("non recyclable", response.json()["label"])
+
+    if option =="Villeneuve d'Ascq":
+        if response.json()["label"] in villeneuve_papier:
+            st.write("Compartiment papier", response.json()["label"])
+
+        elif response.json()["label"] in villeneuve_plastique:
+            st.write("Compartiment plastique / conserve / verre", response.json()["label"])
+
+        elif response.json()["label"] in villeneuve_organique:
+            st.write("Compartiment déchets organiques", response.json()["label"])
+
+        else:
+            st.write("Compartiment non recyclable", response.json()["label"])
+
     return response.json()
 
     
 def main():
     st.title('Image upload demo')
 
+    option_1 = choice()
+
     uploaded_file = get_image()
 
     result = st.button('Run on image')
     if result:
-        pred = predict(uploaded_file)
+        pred = predict(uploaded_file, option_1)
         st.write(pred)
     
 #==============================================
