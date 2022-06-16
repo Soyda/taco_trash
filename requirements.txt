@@ -1,0 +1,9 @@
+sqlalchemy
+fastapi
+pydantic
+numpy
+keras
+tensorflow
+uvicorn
+python-multipart
+Pillow
