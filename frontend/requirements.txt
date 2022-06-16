@@ -2,6 +2,6 @@ streamlit
 seaborn
 matplotlib
 requests
-tensorflow
+tensorflow-cpu
 keras
 numpy
