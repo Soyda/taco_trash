@@ -1,0 +1,7 @@
+streamlit
+seaborn
+matplotlib
+requests
+tensorflow
+keras
+numpy
