@@ -2,7 +2,7 @@ fastapi
 pydantic
 numpy
 keras
-tensorflow
+tensorflow-cpu
 uvicorn
 python-multipart
 Pillow
