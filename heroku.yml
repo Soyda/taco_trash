@@ -3,3 +3,5 @@ build:
     frontend: frontend/Dockerfile
     
     backend: backend/Dockerfile
+  with:
+    docker_compose_file: './docker-compose.yml'
