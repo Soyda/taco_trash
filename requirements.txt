@@ -1,4 +1,3 @@
-sqlalchemy
 fastapi
 pydantic
 numpy
