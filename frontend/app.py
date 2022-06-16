@@ -68,8 +68,11 @@ def predict(uploaded_file, option):
         files=file,
     )
 
-    #remove image
-    os.remove(f"{uploaded_file.name}")
+    #remove images in directory
+    # os.remove(f"{uploaded_file.name}")
+    for file in os.listdir() :
+        if file.endswith(('.png', ".jpg", ".jpeg")):
+            os.remove(file) 
 
     if option == 'Lille':
         if response.json()["label"] in recyclable_lille:
