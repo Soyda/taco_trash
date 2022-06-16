@@ -6,3 +6,4 @@ tensorflow-cpu
 uvicorn
 python-multipart
 Pillow
+gunicorn
