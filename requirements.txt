@@ -2,7 +2,7 @@ fastapi
 pydantic
 numpy
 keras
-tensorflow-cpu
+tensorflow==1.14
 uvicorn
 python-multipart
 Pillow
