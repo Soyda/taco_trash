@@ -16,7 +16,7 @@ model = load_model("modele_alpha_mich")
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to Scan'n'Sort API "}
+    return {"message": "Welcome to What the bin API "}
 
 
 
