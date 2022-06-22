@@ -9,7 +9,7 @@ import requests
 
 
 
-URL = "http://host.docker.internal:8000"
+URL = "https://fast-scrubland-37630.herokuapp.com"
 
 classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
