@@ -25,10 +25,10 @@ async def read_root(file: UploadFile = File()):
  
     image = file.file._file
 
-    #classes and sorting rules
-    classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
+    # #classes and sorting rules
+    # classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
-    recyclable_lille = ["plastic","glass","metal","paper","cardboard"]
+    # recyclable_lille = ["plastic","glass","metal","paper","cardboard"]
 
     #PREPROCESSING AND PREDICTION
     img = tf.keras.preprocessing.image.load_img(image, target_size=(256, 256))
