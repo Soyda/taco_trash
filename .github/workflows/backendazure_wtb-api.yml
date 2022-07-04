@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'wtb-api'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_500AAAFE099748EA9C72CDFAAFEC72D9 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D7581CE7757449FA92C064A2C5B051BE }}
