@@ -36,6 +36,7 @@ async def read_root(file: UploadFile = File()):
     img_array = tf.expand_dims(img_array, 0) 
 
     predictions = model.predict(img_array)
+    pred = np.argmax(predictions)
 
     if classes[np.argmax(predictions)] in recyclable_lille:
         bin = "recyclable"
@@ -44,8 +45,8 @@ async def read_root(file: UploadFile = File()):
 
 
     return {"info": f"file '{file.filename}'",
-            "label":classes[np.argmax(predictions)],
-            "confidence": f"{np.round(predictions[0][np.argmax(predictions)]*100, 2)}%",
+            "label":classes[pred],
+            "confidence": f"{np.round(predictions[0][pred]*100, 2)}%",
             "bin":bin}
 
 
