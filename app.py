@@ -72,12 +72,17 @@ def get_image():
         # save image
         with open(uploaded_file.name,"wb") as f:
             f.write(uploaded_file.getbuffer())
+        
+        # resize image
+        image = Image.open(uploaded_file.name)
+        image = image.resize((500,500),Image.ANTIALIAS)
+        image.save(fp="newimage.png")
 
     return uploaded_file
 
-def predict(uploaded_file, option):
+def predict(option):
     # load image
-    file = {'file': (uploaded_file.name, open(uploaded_file.name, 'rb'))}
+    file = {'file': ("newimage.png", open("newimage.png", 'rb'))}
 
     # request API to make prediction 
     response = requests.post(
@@ -156,7 +161,7 @@ def main():
 
     result = st.button('Run on image')
     if result:
-        pred = predict(uploaded_file, option_1)
+        pred = predict(option_1)
         st.write(pred)
     
 #==============================================
