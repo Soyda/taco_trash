@@ -51,6 +51,7 @@ def choice():
     if option== "Montreuil":
         image_montreuil = Image.open('src/montreuil.jpg')
         st.image(image_montreuil)
+        
     return option
     
 
@@ -100,6 +101,7 @@ def predict(option):
 
     if option == 'Lille':
         if response.json()["label"] in recyclable_lille:
+            
             st.write("recyclable", response.json()["label"])
 
             if response.json()["label"] == 'plastic':
@@ -134,10 +136,8 @@ def predict(option):
                 cardboard_advice()
 
             elif response.json()["label"] == 'metal':
-                paper_advice()
+                battery_advice
 
-            elif response.json()["label"] == 'paper':
-                paper_advice()
 
 
         elif response.json()["label"] in montreuil_verre:
