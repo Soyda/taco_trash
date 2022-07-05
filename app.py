@@ -9,8 +9,8 @@ import requests
 
 
 
-# URL = "https://fast-scrubland-37630.herokuapp.com"
-URL = "http://host.docker.internal:8000"
+URL = "https://fast-scrubland-37630.herokuapp.com"
+# URL = "http://host.docker.internal:8000"
 
 # classes = ['clothes', 'battery', 'organic', 'cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
@@ -22,43 +22,57 @@ montreuil_verre = ['glass']
 
 
 def plastic_advice():
-    st.write("Les pots de yaourt sont pour l'instant pas recyclables dans toutes les communes francaises, de même pour les sacs plastiques.")
+    st.write("Les pots de yaourt ne sont, pour l'instant, pas recyclables dans toutes les communes francaises, de même pour les sacs plastiques.")
+    img1 = Image.open("src/plastic.png") 
+    st.image(img1, width=200) 
 
 def organic_advice():
-    st.write("Les déchets de végétaux sont compostables. A mettre dans un composteur, un lombricomposteur ou un bokashi par exemple.")
+    st.write("Les déchets issus des végétaux sont compostables. Veuillez les mettre dans un composteur, un lombricomposteur ou un bokashi par exemple.")
+    img2 = Image.open("src/organic.png") 
+    st.image(img2, width=200) 
 
 def cardboard_advice():
-    st.write("Le carton souillé ne se recycle pas. A déchirer pour mettre dans les bacs de recyclage dédiés ou entier à la décheterie")
+    st.write("A déchirer et à mettre dans les bacs de recyclage dédiés ou en entier en décheterie ( Attention, le carton souillé ne se recycle pas ! )")
+    img3 = Image.open("src/paper.png") 
+    st.image(img3, width=200) 
 
 def glass_advice():
     st.write("Pensez à enlever le bouchon des bouteilles en verre")
+    img4 = Image.open("src/glass.png") 
+    st.image(img4, width=200) 
 
 def battery_advice():
     st.write("Attention, les batteries sont à déposer en décheterie ou dans les bacs dédiés en magasin")
+    img5 = Image.open("src/piles.png") 
+    st.image(img5, width=200) 
 
 def clothes_advice():
-    st.write("Si en bon état, à vendre ou donner ou à déposer dans les bennes de collectes : https://refashion.fr/citoyen/fr/point-dapport?")
+    st.write("Si en bon état, à vendre, à donner ou à déposer dans les bennes de collectes : https://refashion.fr/citoyen/fr/point-dapport?")
+    img6 = Image.open("src/vetements.png") 
+    st.image(img6, width=200)
 
 def choice():
     option = st.selectbox(
         'Selectionnez votre Fabrique',
         ('Fabrique de Lille', "Fabrique de Montreuil"))
 
-    st.write('Fabrique de', option)
+    st.write('Bravo, la nature  vous remercie pour votre geste à la', option)
     if option== 'Fabrique de Lille':
         img = Image.open("src/fab_lille.jpg") 
-        st.image(img, width=700) 
+        st.image(img, width=200) 
         image_lille = Image.open('src/lille.jpg')
-        st.image(image_lille, width=700)
+        st.image(image_lille, width=600)
 
     if option== "Fabrique de Montreuil":
+        imag_montreuil = Image.open('src/fab_montreuil.jpeg')
+        st.image(imag_montreuil, width=200)
         image_montreuil = Image.open('src/montreuil.jpg')
-        st.image(image_montreuil)
+        st.image(image_montreuil, width=600)
         
     return option
     
 def mode():
-    mode= st.radio("Comment voulez vous utiliser l'application ?",("Utiliser une photo existante","Prendre une photo"))
+    mode= st.radio("Comment souhaitez-vous utiliser l'application ?",("Utiliser une photo existante","Prendre une photo"))
     return mode 
 
 def load_image(img):
@@ -68,14 +82,10 @@ def load_image(img):
 
 def get_image(photo_mode):
     # get image
-<<<<<<< HEAD
-    uploaded_file = st.file_uploader(label='Montre nous ton déchet')
-=======
     if photo_mode == "Prendre une photo":
         uploaded_file = st.camera_input("Prendre une photo")
     else :
         uploaded_file = st.file_uploader(label='Utiliser une image existante')
->>>>>>> eb547c3102c50eddc66189c7dfdd2c903c664281
 
     if uploaded_file:
         file_details = {"Filename":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
@@ -112,7 +122,7 @@ def predict(option):
     # Consignes Lille
 
 
-    if option == 'Lille':
+    if option == 'Fabrique de Lille':
         if response.json()["label"] in recyclable_lille:
             
             st.write("recyclable", response.json()["label"])
@@ -136,7 +146,7 @@ def predict(option):
     # Consignes Montreuil 
 
 
-    if option =="Montreuil":
+    if option =="Fabrique de Montreuil":
 
         if response.json()["label"] in montreuil_jaune:
 
@@ -170,25 +180,23 @@ def predict(option):
 #Accueil
     
 def main():
-    img = Image.open("src/simplon.png") 
+    img = Image.open("src/bin.png") 
     st.image(img, width=700) 
-    st.title("What'S The Bin !?")
-    "L'appli qui t'aide à trier tes déchets.."
+    st.title("L'appli qui t'aide à trier tes déchets..")
+    
     option_1 = choice()
 
-<<<<<<< HEAD
-
-    uploaded_file = get_image()
-=======
     photo_mode = mode()
     uploaded_file = get_image(photo_mode)
->>>>>>> eb547c3102c50eddc66189c7dfdd2c903c664281
 
     result = st.button('Obtenir les consignes de Tri')
     if result:
         pred = predict(option_1)
         st.write(pred)
-    
+    st.write(" ")
+    st.write(" ")
+    img = Image.open("src/poub.png") 
+    st.image(img, width=700) 
 
 if __name__ == '__main__':
     main()
