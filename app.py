@@ -9,7 +9,8 @@ import requests
 
 
 
-URL = "https://fast-scrubland-37630.herokuapp.com"
+# URL = "https://fast-scrubland-37630.herokuapp.com"
+URL = "http://host.docker.internal:8000"
 
 # classes = ['clothes', 'battery', 'organic', 'cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
@@ -53,15 +54,21 @@ def choice():
         st.image(image_montreuil)
     return option
     
+def mode():
+    mode= st.radio("Comment voulez vous utiliser l'application ?",("Utiliser une photo existante","Prendre une photo"))
+    return mode 
 
 def load_image(img):
     img = Image.open(img)
     return img
 
 
-def get_image():
+def get_image(photo_mode):
     # get image
-    uploaded_file = st.file_uploader(label='Pick an image to test')
+    if photo_mode == "Prendre une photo":
+        uploaded_file = st.camera_input("Prendre une photo")
+    else :
+        uploaded_file = st.file_uploader(label='Utiliser une image existante')
 
     if uploaded_file:
         file_details = {"Filename":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
@@ -93,7 +100,7 @@ def predict(option):
     #remove images in directory
     # os.remove(f"{uploaded_file.name}")
     for file in os.listdir() :
-        if file.endswith(('.png', ".jpg", ".jpeg")):
+        if file.endswith(('.png', ".jpg", ".jpeg", ".webp")):
             os.remove(file) 
     # Consignes Lille
 
@@ -133,11 +140,11 @@ def predict(option):
             elif response.json()["label"] == 'cardboard':
                 cardboard_advice()
 
-            elif response.json()["label"] == 'metal':
-                paper_advice()
+            # elif response.json()["label"] == 'metal':
+            #     paper_advice()
 
-            elif response.json()["label"] == 'paper':
-                paper_advice()
+            # elif response.json()["label"] == 'paper':
+            #     paper_advice()
 
 
         elif response.json()["label"] in montreuil_verre:
@@ -157,46 +164,14 @@ def main():
 
     option_1 = choice()
 
-    uploaded_file = get_image()
+    photo_mode = mode()
+    uploaded_file = get_image(photo_mode)
 
     result = st.button('Run on image')
     if result:
         pred = predict(option_1)
         st.write(pred)
     
-#==============================================
-
-    # # get image
-    # uploaded_file = st.file_uploader(label='Pick an image to test')
-    # file_details = {"Filename":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
-    # st.write(file_details)
-    # img = load_image(uploaded_file)
-    # st.image(img)
-
-    # # save image
-    # with open(uploaded_file.name,"wb") as f:
-    #     f.write(uploaded_file.getbuffer())
-
-    # # load image
-    # file = {'file': (uploaded_file.name, open(uploaded_file.name, 'rb'))}
-
-    # # request API to make prediction 
-    # response = requests.post(
-    #     f"{URL}/upload_file",
-    #     files=file,
-    # )
-
-    # #remove image
-    # os.remove(f"{uploaded_file.name}")
-
-    # st.write(response.json())
-
-#================================================
-#================================================
-
-    
-
-
 
 if __name__ == '__main__':
     main()
