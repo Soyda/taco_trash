@@ -27,7 +27,7 @@ def organic_advice():
     st.write("Les déchets de végétaux sont compostables. A mettre dans un composteur, un lombricomposteur ou un bokashi par exemple.")
 
 def cardboard_advice():
-    st.write("La carton souillé ne se recycle pas. A déchirer pour mettre dans les bacs de recyclage dédiés ou entier à la décheterie")
+    st.write("Le carton souillé ne se recycle pas. A déchirer pour mettre dans les bacs de recyclage dédiés ou entier à la décheterie")
 
 def glass_advice():
     st.write("Pensez à enlever le bouchon des bouteilles en verre")
@@ -40,15 +40,17 @@ def clothes_advice():
 
 def choice():
     option = st.selectbox(
-        'Dans quelle ville résidez vous ?',
-        ('Lille', "Montreuil"))
+        'Selectionnez votre Fabrique',
+        ('Fabrique de Lille', "Fabrique de Montreuil"))
 
-    st.write('You selected:', option)
-    if option== 'Lille':
+    st.write('Fabrique de', option)
+    if option== 'Fabrique de Lille':
+        img = Image.open("src/fab_lille.jpg") 
+        st.image(img, width=700) 
         image_lille = Image.open('src/lille.jpg')
-        st.image(image_lille)
+        st.image(image_lille, width=700)
 
-    if option== "Montreuil":
+    if option== "Fabrique de Montreuil":
         image_montreuil = Image.open('src/montreuil.jpg')
         st.image(image_montreuil)
         
@@ -62,7 +64,7 @@ def load_image(img):
 
 def get_image():
     # get image
-    uploaded_file = st.file_uploader(label='Pick an image to test')
+    uploaded_file = st.file_uploader(label='Montre nous ton déchet')
 
     if uploaded_file:
         file_details = {"Filename":uploaded_file.name,"FileType":uploaded_file.type,"FileSize":uploaded_file.size}
@@ -151,15 +153,20 @@ def predict(option):
 
     return response.json()
 
+
+#Accueil
     
 def main():
-    st.title('Image upload demo')
-
+    img = Image.open("src/simplon.png") 
+    st.image(img, width=700) 
+    st.title("What'S The Bin !?")
+    "L'appli qui t'aide à trier tes déchets.."
     option_1 = choice()
+
 
     uploaded_file = get_image()
 
-    result = st.button('Run on image')
+    result = st.button('Obtenir les consignes de Tri')
     if result:
         pred = predict(option_1)
         st.write(pred)
