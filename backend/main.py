@@ -13,6 +13,8 @@ from io import BytesIO
 app = FastAPI()
 
 model = load_model("modele_alpha_mich")
+# model = load_model("modele_nounou_1_087")
+
 
 @app.get("/")
 async def root():
@@ -25,8 +27,9 @@ async def read_root(file: UploadFile = File()):
  
     image = file.file._file
 
-    #classes and sorting rules
+    #classes 
     classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
+    # classes = ['clothes', 'battery', 'organic', 'cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
     recyclable_lille = ["plastic","glass","metal","paper","cardboard"]
 
