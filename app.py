@@ -52,6 +52,7 @@ def choice():
     if option== "Montreuil":
         image_montreuil = Image.open('src/montreuil.jpg')
         st.image(image_montreuil)
+        
     return option
     
 def mode():
@@ -107,6 +108,7 @@ def predict(option):
 
     if option == 'Lille':
         if response.json()["label"] in recyclable_lille:
+            
             st.write("recyclable", response.json()["label"])
 
             if response.json()["label"] == 'plastic':
