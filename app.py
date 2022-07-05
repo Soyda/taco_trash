@@ -52,7 +52,6 @@ def choice():
     if option== "Montreuil":
         image_montreuil = Image.open('src/montreuil.jpg')
         st.image(image_montreuil)
-        
     return option
     
 def mode():
@@ -103,12 +102,10 @@ def predict(option):
     for file in os.listdir() :
         if file.endswith(('.png', ".jpg", ".jpeg", ".webp")):
             os.remove(file) 
+
     # Consignes Lille
-
-
     if option == 'Lille':
         if response.json()["label"] in recyclable_lille:
-            
             st.write("recyclable", response.json()["label"])
 
             if response.json()["label"] == 'plastic':
@@ -120,7 +117,6 @@ def predict(option):
             elif response.json()["label"] == 'metal':
                 battery_advice()
 
-
             elif response.json()["label"] == 'glass':
                 glass_advice()
         else:
@@ -128,8 +124,6 @@ def predict(option):
 
 
     # Consignes Montreuil 
-
-
     if option =="Montreuil":
 
         if response.json()["label"] in montreuil_jaune:
@@ -173,6 +167,9 @@ def main():
     if result:
         pred = predict(option_1)
         st.write(pred)
+
+        if float(pred['confidence']) < 50:
+            st.write(f"L'indice de confiance étant inférieur à 50%, renseignez-vous un peu plus pour être sûr de la manière de trier ce type de déchet.")
     
 
 if __name__ == '__main__':
