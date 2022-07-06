@@ -12,13 +12,14 @@ from io import BytesIO
 
 app = FastAPI()
 
-model = load_model("modele_alpha_mich")
+model = load_model("model_after_dataaug")
+# model = load_model("modele_alpha_mich")
 # model = load_model("modele_nounou_1_087")
 
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to Scan'n'Sort API "}
+    return {"message": "Welcome to What The Bin's API "}
 
 
 
@@ -28,8 +29,8 @@ async def read_root(file: UploadFile = File()):
     image = file.file._file
 
     #classes 
-    classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
-    # classes = ['clothes', 'battery', 'organic', 'cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
+    # classes = ['cardboard', 'glass', 'metal', 'paper', 'plastic', 'trash']
+    classes = ['battery', 'biological', 'cardboard', 'clothes', 'glass', 'metal', 'paper', 'plastic', 'trash']
 
     recyclable_lille = ["plastic","glass","metal","paper","cardboard"]
 
@@ -48,7 +49,7 @@ async def read_root(file: UploadFile = File()):
 
     return {"info": f"file '{file.filename}'",
             "label":classes[np.argmax(predictions)],
-            "confidence": f"{np.round(predictions[0][np.argmax(predictions)]*100, 2)}%",
+            "confidence": f"{np.round(predictions[0][np.argmax(predictions)]*100, 2)}",
             "bin":bin}
 
 
