@@ -147,7 +147,7 @@ def predict(option):
     #remove images in directory
     # os.remove(f"{uploaded_file.name}")
     for file in os.listdir() :
-        if file.endswith(('.png', ".jpg", ".jpeg", ".webp")):
+        if file.endswith(('.png', ".jpg", ".jpeg", ".webp", ".JPG", ".JPEG")):
             os.remove(file) 
 
     # Consignes Lille
